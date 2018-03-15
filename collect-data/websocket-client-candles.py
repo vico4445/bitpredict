@@ -23,33 +23,37 @@ class DecimalEncoder(json.JSONEncoder):
         return super(DecimalEncoder, self).default(o)
 
 async def get_candles(log_file):
-	async with websockets.connect('wss://api.bitfinex.com/ws/2') as websocket:
-		msg = json.dumps({'event': 'subscribe', 'channel': 'candles', 'key': sys.argv[2]}) # exemple tBTCUSD
-		await websocket.send(msg)
-		print("> {}".format(msg), file=log_file)
+	try:
+		async with websockets.connect('wss://api.bitfinex.com/ws/2') as websocket:
+			msg = json.dumps({'event': 'subscribe', 'channel': 'candles', 'key': sys.argv[2]}) # exemple tBTCUSD
+			await websocket.send(msg)
+			print("> {}".format(msg), file=log_file)
 
-		info = await websocket.recv()
-		print("< {}".format(info), file=log_file)
+			info = await websocket.recv()
+			print("< {}".format(info), file=log_file)
 
-		event = await websocket.recv()
-		print("< {}".format(event), file=log_file)
+			event = await websocket.recv()
+			print("< {}".format(event), file=log_file)
 
-		while True:
-			response = await websocket.recv()
-			parsed_response = re.split(',|\[|\]', response)
-			if(len(parsed_response) == 11):
-				if(debug):
-					print(parsed_response, file=log_file, flush=True)
-				response = table.put_item(
-				   Item={
-				        'mts': parsed_response[3],
-				        'open': parsed_response[4],
-				        'close': parsed_response[5],
-				        'high': parsed_response[6],
-				        'low': parsed_response[7],
-				        'volume': parsed_response[8]
-				    }
-				)
+			while True:
+				response = await websocket.recv()
+				parsed_response = re.split(',|\[|\]', response)
+				if(len(parsed_response) == 11):
+					if(debug):
+						print(parsed_response, file=log_file, flush=True)
+					response = table.put_item(
+					   Item={
+					        'mts': parsed_response[3],
+					        'open': parsed_response[4],
+					        'close': parsed_response[5],
+					        'high': parsed_response[6],
+					        'low': parsed_response[7],
+					        'volume': parsed_response[8]
+					    }
+					)
+	except:
+		print("Unexpected error:", sys.exc_info()[0], file=log_file, flush=True)
+		raise
 
 if len(sys.argv) < 3:
 	print("Wrong number of arguments : 2 or 3 expected")
@@ -68,4 +72,13 @@ else:
 			debug=sys.argv[3]
 		print("debug: ", debug, file=f)
 
-		asyncio.get_event_loop().run_until_complete(get_candles(f))
+		try_number=0
+		while True:
+			try:
+				try_number = try_number + 1
+				print("try number : ", try_number)
+				asyncio.get_event_loop().run_until_complete(get_candles(f))
+			except KeyboardInterrupt:
+				break
+			except:
+				print("Exception catch start again !!!", file=f)

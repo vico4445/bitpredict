@@ -9,7 +9,7 @@ nohup python3 websocket-client.py btc_trades trades tBTCUSD
 NEW !!!
 Use tmux instead of nohup
 --> tmux 
---> python3 websocket-client.py btc_trades trades tBTCUSD
+--> python3 websocket-client-candles.py btc_candles_5m trade:5m:tBTCUSD True
 
 CLOSE PUTTY
 OPEN PUTTY
