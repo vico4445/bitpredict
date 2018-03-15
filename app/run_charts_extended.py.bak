@@ -5,7 +5,7 @@ from bokeh.models.formatters import DatetimeTickFormatter, PrintfTickFormatter
 from bokeh.io import vplot
 from bokeh import embed
 from json import load
-from urllib.request import urlopen
+from urllib2 import urlopen
 import time
 
 client = pymongo.MongoClient()
@@ -14,7 +14,7 @@ collection = db['btc_predictions']
 
 
 def get_data():
-    cursor = collection.find().limit(9*60).sort('_id', pymongo.DESCENDING)
+    cursor = collection.find().limit(3*60*60).sort('_id', pymongo.DESCENDING)
     data = pd.DataFrame(list(cursor))
     data = data.set_index('_id')
     data = data.sort_index(ascending=True)
@@ -25,11 +25,11 @@ def get_data():
     return timestamps, prices, predictions, returns
 
 timestamps, prices, predictions, returns = get_data()
-output_server('bitpredict')
+output_server('bitpredict_extended')
 
 background = '#f2f2f2'
 ylabel_standoff = 0
-xformatter = DatetimeTickFormatter(formats=dict(minutes=["%H:%M"]))
+xformatter = DatetimeTickFormatter(formats=dict(hours=["%H:%M"]))
 yformatter = PrintfTickFormatter(format="%8.1f")
 p1 = figure(title=None,
             plot_width=750,
@@ -143,8 +143,7 @@ html = """
 %s
 {%% endblock %%}
 """ % tag
-
-with open('templates/index.html', 'w+') as f:
+with open('templates/extended.html', 'w+') as f:
     f.write(html)
 
 renderer = p1.select(dict(name='prices'))
@@ -165,4 +164,4 @@ while True:
     ssn.store_objects(ds_prices)
     ssn.store_objects(ds_predictions)
     ssn.store_objects(ds_returns)
-    time.sleep(1)
+    time.sleep(60)

@@ -1,0 +1,8 @@
+Convert code in Python3
+Install mongoDB
+Create DB
+Launch DB
+
+Récuperer donnée : trades et books
+Créer les features à partir des données avec le features.py
+Entrainer le model avec les features (model.py)

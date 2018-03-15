@@ -1,0 +1,6 @@
+Google trends 
+Google corolate
+Twitter
+Reddit
+
+nltk library for tokenization && sentiment analyser

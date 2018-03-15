@@ -1,0 +1,7 @@
+create file ~/aws/configure
+create file ~/aws/config
+
+configure file contains ID access key and ID secret key
+config file contains region=us-east-2 and output=json
+
+nohup python3 websocket-client.py btc_trades trades tBTCUSD

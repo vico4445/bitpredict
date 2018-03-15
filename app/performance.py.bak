@@ -10,7 +10,7 @@ frequency = int(sys.argv[2])
 predictions = db[symbol+'_predictions']
 performance = db[symbol+'_performance']
 
-print('Running...')
+print 'Running...'
 last_timestamp = time.time() - frequency
 while True:
     start = time.time()

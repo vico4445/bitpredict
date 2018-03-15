@@ -27,7 +27,7 @@ def trade(X, y, index, model, threshold):
     '''
     Backtests a theoretical trading strategy
     '''
-    print('r-squared', model.score(X, y))
+    print 'r-squared', model.score(X, y)
     preds = model.predict(X)
     trades = np.zeros(len(preds))
     count = 0

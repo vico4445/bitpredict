@@ -195,23 +195,23 @@ def make_features(symbol, sample, mid_offsets,
     # Book related features:
     books = get_book_df(symbol, sample)
     if not live:
-        print('get book data run time:', (time()-stage)/60, 'minutes')
+        print 'get book data run time:', (time()-stage)/60, 'minutes'
         stage = time()
     books['width'], books['mid'] = get_width_and_mid(books)
     if not live:
-        print('width and mid run time:', (time()-stage)/60, 'minutes')
+        print 'width and mid run time:', (time()-stage)/60, 'minutes'
         stage = time()
     for n in mid_offsets:
         books['mid{}'.format(n)] = get_future_mid(books, n, sensitivity=1)
     if not live:
         books = books.dropna()
-        print('offset mids run time:', (time()-stage)/60, 'minutes')
+        print 'offset mids run time:', (time()-stage)/60, 'minutes'
         stage = time()
     for p in powers:
         books['imbalance{}'.format(p)] = get_power_imbalance(books, 10, p)
         books['adj_price{}'.format(p)] = get_power_adjusted_price(books, 10, p)
     if not live:
-        print('power calcs run time:', (time()-stage)/60, 'minutes')
+        print 'power calcs run time:', (time()-stage)/60, 'minutes'
         stage = time()
     books = books.drop(['bids', 'asks'], axis=1)
 
@@ -235,9 +235,9 @@ def make_features(symbol, sample, mid_offsets,
             books['agg{}'.format(n)] = get_aggressor(books, trades)
             books['trend{}'.format(n)] = get_trend(books, trades)
     if not live:
-        print('trade features run time:', (time()-stage)/60, 'minutes')
+        print 'trade features run time:', (time()-stage)/60, 'minutes'
         stage = time()
-        print('make_features run time:', (time()-start)/60, 'minutes')
+        print 'make_features run time:', (time()-start)/60, 'minutes'
 
     return books.drop('indexes', axis=1)
 

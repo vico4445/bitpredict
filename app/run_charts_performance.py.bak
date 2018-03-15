@@ -4,7 +4,7 @@ from bokeh.plotting import cursession, figure, output_server, push
 from bokeh.models.formatters import DatetimeTickFormatter, PrintfTickFormatter
 from bokeh import embed
 from json import load
-from urllib.request import urlopen
+from urllib2 import urlopen
 import time
 
 client = pymongo.MongoClient()
