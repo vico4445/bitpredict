@@ -1,7 +1,5 @@
-from __future__ import print_function # Python 2/3 compatibility
 import boto3
 import json
-import decimal
 
 client = boto3.client('dynamodb')
 

@@ -1,0 +1,21 @@
+Configuration for AWS :
+http://boto3.readthedocs.io/en/latest/guide/quickstart.html#configuration
+	1- create file ~/aws/credentials
+		- ID access key
+		- ID secret key
+	2- create file ~/aws/config
+		- region=us-east-2
+		- output=json
+	3- REBOOT
+
+Launching data-collection on AWS :
+	- Connect in ssh to the AWS EC2
+	- On EC2 console :
+		- CMD : tmux ("It allows to keep program running after ssh session is closed)
+		- CMD : python3 websocket-client-candles.py btc_candles_5m trade:5m:tBTCUSD True
+
+Checking program when it is already launch on AWS :
+	- Connect in ssh to the AWS EC2
+	- tmux attach ("Get terminal instance used to launch program on first session")
+
+BOTO3 documentation for dynamoDB: http://boto3.readthedocs.io/en/latest/reference/services/dynamodb.html
