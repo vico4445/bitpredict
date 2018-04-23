@@ -1,7 +1,7 @@
 *.pyc
 *.pkl
 *.swp
-*ipynb*
 *0.0.0.0*
 *.sh
 *.bak
+*.json

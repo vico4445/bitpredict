@@ -8,6 +8,10 @@ http://boto3.readthedocs.io/en/latest/guide/quickstart.html#configuration
 		- output=json
 	3- REBOOT
 
+Configuration plotly for plotting candlesticks : https://plot.ly/python/getting-started/
+	import plotly
+	plotly.tools.set_credentials_file(username='DemoAccount', api_key='lr1c37zw81')
+
 Launching data-collection on AWS :
 	- Connect in ssh to the AWS EC2
 	- On EC2 console :
